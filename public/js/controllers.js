@@ -27,13 +27,7 @@ app.controller('homeCtrl', function($scope, $http, $log) {
           //   $scope.image = "http://192.168.43.1:6624/media/e/DCIM/Camera/20160716_100953.jpg";
           // });
 
-
       })
-
     })
-
-
-    // call router
-
   }
 })

@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
 // get File Path
 router.post('/Path/:id', (req, res) => {
 
-  var objBody = { 
+  var objBody = {
     id: req.params.id
   };
 
@@ -46,8 +46,6 @@ router.post('/Path/:id', (req, res) => {
 
   request(options, function (err, response, body) {
 
-    // console.log('bodybodybodybody', body);
-
     (err) ? response.status(400).send(err) : res.send(body);
   });
 
@@ -56,7 +54,7 @@ router.post('/Path/:id', (req, res) => {
 // get Picture
 router.post('/Pictures/:fileParam', (req, res) => {
 
-  var url = { 
+  var url = {
     fileUrl: req.params.id
   };
 
