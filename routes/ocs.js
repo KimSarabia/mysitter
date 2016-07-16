@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-
+const Jimp = require("jimp");
 
 // get setup enviroment
 // router.get('/', (req, res) => {
@@ -32,20 +32,35 @@ router.post('/', (req, res) => {
 });
 
 // get File Path
-router.post('/Path', (req, res) => {
+router.post('/Path/:id', (req, res) => {
+
+  var objBody = { 
+    id: req.params.id
+  };
+
+  var ret = JSON.stringify(objBody);
 
   var options = { method: 'POST',
   url: 'http://192.168.43.1:6624/osc/commands/status',
-  body: '{\n    "id" : "CCS64ec8"\n}' };
+  body: ret };
 
   request(options, function (err, response, body) {
+
+    // console.log('bodybodybodybody', body);
+
     (err) ? response.status(400).send(err) : res.send(body);
   });
 
 });
 
 // get Picture
-router.post('/Pictures', (req, res) => {
+router.post('/Pictures/:fileParam', (req, res) => {
+
+  var url = { 
+    fileUrl: req.params.id
+  };
+
+  var ret = JSON.stringify(url);
 
   var options = { method: 'POST',
     url: 'http://192.168.43.1:6624/osc/commands/execute',
@@ -56,11 +71,12 @@ router.post('/Pictures', (req, res) => {
      },
     body:
      { name: 'camera.getFile',
-       parameters: { fileUrl: '/media/e/DCIM/Camera/20160716_012309.jpg' } },
+       // parameters: { fileUrl: '/media/e/DCIM/Camera/20160716_014638.jpg' } },
+       parameters: { fileUrl: ret } },
     json: true };
 
     request(options, function (err, response, body) {
-      (err) ? response.status(400).send(err) : res.send(body);
+        (err) ? response.status(400).send(err) : res.send('body');
     });
 
 });
@@ -75,7 +91,7 @@ router.post('/Delete', (req, res) => {
          'content-type': 'application/json' },
     body:
      { name: 'camera.delete',
-       parameters: { fileUri: '/media/e/DCIM/Camera/20160716_012309.jpg' } },
+       parameters: { fileUri: '/media/e/DCIM/Camera/20160716_014638.jpg' } },
     json: true };
 
     request(options, function (err, response, body) {
@@ -83,9 +99,5 @@ router.post('/Delete', (req, res) => {
     });
 
 });
-
-
-
-
 
 module.exports = router;
